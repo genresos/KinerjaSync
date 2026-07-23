@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'kinerja' => [
+        'url'      => env('KINERJA_API_URL'),
+        'username' => env('KINERJA_API_USERNAME'),
+        'password' => env('KINERJA_API_PASSWORD'),
+    ],
+
 ];

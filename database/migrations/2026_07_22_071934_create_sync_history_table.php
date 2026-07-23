@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('transaction_id', 50);
             $table->string('emp_id', 30);
             $table->string('emp_name', 50);
+            $table->timestamp('event_time', 6);
             $table->boolean('status')->default(false); // 0 = gagal, 1 = sukses
             $table->text('err_msg')->nullable();
             $table->timestamps();
