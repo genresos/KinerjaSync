@@ -42,14 +42,14 @@ class KinerjaSyncController extends Controller
                 'trx.event_time',
                 'trx.name'
             )
-            ->where('trx.id', '402880d09f85019c019f8c93c12c2064') // untuk test
-            // ->where('trx.dev_id', '402880d09f422d61019f845c775d5ea1')
-            // ->where('trx.pin', '>', 10000000)
-            // ->whereNotIn('trx.id', $dataFetched)
-            // ->whereBetween(
-            //     DB::raw('DATE(trx.event_time)'),
-            //     [$prev_date, $date]
-            // )
+            // ->where('trx.id', '402880d09f85019c019f8c93c12c2064') // untuk test
+            ->where('trx.dev_id', '402880d09f422d61019f845c775d5ea1')
+            ->where('trx.pin', '>', 10000000)
+            ->whereNotIn('trx.id', $dataFetched)
+            ->whereBetween(
+                DB::raw('DATE(trx.event_time)'),
+                [$prev_date, $date]
+            )
             ->orderBy('trx.id', 'asc')
             ->get();
 
