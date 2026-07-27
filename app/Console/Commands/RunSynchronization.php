@@ -2,44 +2,48 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Attributes\Description;
-use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use App\Http\Controllers\KinerjaSyncController;
+use Illuminate\Console\Attributes\Description;
+use Illuminate\Console\Attributes\Signature;
 
 #[Signature('app:run-synchronization')]
-#[Description('Command description')]
+#[Description('Run attendance synchronization to Kinerja')]
 class RunSynchronization extends Command
 {
-    protected $signature = 'synchronization:run';
-
-    protected $description = 'Run attendance synchronization to Kinerja';
-
     public function handle()
     {
-        $this->info('Starting attendance synchronization...');
+        $this->info('Attendance synchronization service started.');
 
-        try {
+        while (true) {
 
-            $controller = app(KinerjaSyncController::class);
+            try {
 
-            $controller->FetchAttendance();
+                $this->info('Starting attendance synchronization...');
 
-            $this->info('Attendance synchronization completed successfully.');
+                $controller = app(KinerjaSyncController::class);
 
-            return Command::SUCCESS;
-        } catch (\Throwable $e) {
+                $controller->FetchAttendance();
 
-            $this->error('Synchronization failed.');
-            $this->error($e->getMessage());
+                $this->info(
+                    'Attendance synchronization completed successfully.'
+                );
 
-            \Log::error('RunSynchronization Command Error', [
-                'message' => $e->getMessage(),
-                'file'    => $e->getFile(),
-                'line'    => $e->getLine(),
-            ]);
+            } catch (\Throwable $e) {
 
-            return Command::FAILURE;
+                $this->error('Synchronization failed.');
+                $this->error($e->getMessage());
+
+                \Log::error('RunSynchronization Command Error', [
+                    'message' => $e->getMessage(),
+                    'file'    => $e->getFile(),
+                    'line'    => $e->getLine(),
+                ]);
+            }
+
+            sleep(10);
         }
+
+        return Command::SUCCESS;
     }
 }
