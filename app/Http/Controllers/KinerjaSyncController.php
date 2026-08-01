@@ -64,7 +64,7 @@ class KinerjaSyncController extends Controller
                     'emp_id'         => $item->pin,
                     'emp_name'       => $item->name,
                     'event_time'     => $item->event_time,
-                    'created_at'     => Carbon::now('Asia/Jakarta')->format('Y-m-d H:i:s.v'),
+                    'created_at'     => Carbon::now('Asia/Jakarta')->format('Y-m-d H:i:s'),
                 ]);
 
                 try {
